@@ -1,16 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include <map>
 #include <string>
-#include <fstream>
+#include <cstdlib>
+#include <unistd.h>
+#include <sys/wait.h>
 #include <sstream>
-#include <cmath>
-#include <functional>
 #include <vector>
-#include <set>
+#include <fcntl.h>
 
-using std::map;
 using std::vector;
 using std::pair;
 using std::string;
@@ -18,6 +16,8 @@ using std::cout;
 using std::endl;
 using std::cin;
 using std::ifstream;
-using std::multimap;
-using std::abs;
-using std::set;
+
+const std::string userNameColor = "\033[93m";  // Light yellow
+const std::string directoryColor = "\033[95m";  // Pink
+const std::string branchColor = "\033[92m";  // Light green
+const std::string resetColor = "\033[0m";  // Reset color

@@ -1,16 +1,10 @@
-//
-// Created by Yaakov Haimoff on 06/06/2023.
-//
+#pragma once
 
-#ifndef EX2_DIRECTORY_H
-#define EX2_DIRECTORY_H
-
-
+#include "macros.h"
 
 class Directory {
+public:
+    static string getCurrentDirectory();
 
+    static void changeDirectory(string &previousDir, const string &directory);
 };
-
-
-
-#endif //EX2_DIRECTORY_H

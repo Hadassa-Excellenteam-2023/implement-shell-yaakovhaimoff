@@ -1,16 +1,8 @@
-//
-// Created by Yaakov Haimoff on 06/06/2023.
-//
+#pragma once
 
-#ifndef EX2_GIT_H
-#define EX2_GIT_H
-
-
+#include "macros.h"
 
 class Git {
-
+public:
+    static std::string getCurrentBranch();
 };
-
-
-
-#endif //EX2_GIT_H

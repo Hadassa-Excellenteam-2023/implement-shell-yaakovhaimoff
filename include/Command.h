@@ -1,16 +1,14 @@
-//
-// Created by Yaakov Haimoff on 06/06/2023.
-//
+#pragma once
 
-#ifndef EX2_COMMAND_H
-#define EX2_COMMAND_H
-
-
+#include "macros.h"
 
 class Command {
+    static string resolveCommandPath(const std::string &command);
 
+    static vector<string> parseArguments(const string &command);
+
+    static vector<char *> setArguments(vector<string> &tokens);
+public:
+
+    static void execute(const string &command);
 };
-
-
-
-#endif //EX2_COMMAND_H

@@ -1,5 +1,10 @@
-//
-// Created by Yaakov Haimoff on 06/06/2023.
-//
-
 #include "User.h"
+
+string User::getCurrentUser() {
+    char *userName = getenv("USER");
+    if (userName != nullptr) {
+        return {userName};
+    } else {
+        return "";
+    }
+}

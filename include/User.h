@@ -1,16 +1,8 @@
-//
-// Created by Yaakov Haimoff on 06/06/2023.
-//
+#pragma once
 
-#ifndef EX2_USER_H
-#define EX2_USER_H
-
-
+#include "macros.h"
 
 class User {
-
+public:
+    static std::string getCurrentUser();
 };
-
-
-
-#endif //EX2_USER_H

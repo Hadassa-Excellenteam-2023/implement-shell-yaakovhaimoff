@@ -1,16 +1,20 @@
-//
-// Created by Yaakov Haimoff on 06/06/2023.
-//
+#pragma once
 
-#ifndef EX2_SHELL_H
-#define EX2_SHELL_H
-
+#include "macros.h"
+#include "Command.h"
+#include "Directory.h"
+#include "Git.h"
+#include "User.h"
 
 
 class Shell {
+    string m_branch;
+    string m_command;
+    string m_directory;
+    string m_previousDir;
 
+public:
+    void run();
+
+    void displayPrompt();
 };
-
-
-
-#endif //EX2_SHELL_H
