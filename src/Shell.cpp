@@ -22,8 +22,7 @@ void Shell::displayJobs() {
         int processStatus = waitpid(it->getPid(), &status, WNOHANG);
         if (processStatus == -1) {
             std::cout << "Error checking process status for PID: " << it->getPid() << std::endl;
-        }
-        else if (processStatus == it->getPid()) {
+        } else if (processStatus == it->getPid()) {
             MyJobs::eraseJob(int(it - bgProcesses.begin()));
         } else {
             std::cout << it->getPid() << "\t" << it->getCommand() << "\t\t" << "Running" << std::endl;
@@ -46,8 +45,12 @@ void Shell::run() {
         } else if (m_command == "myjobs") {
             displayJobs();
         } else {
-            m_command.ends_with("&") ? Command::execute(m_command, true) :
-            Command::execute(m_command, false);
+            if (m_command.ends_with("&")) {
+                m_command = m_command.substr(0, m_command.size() - 1);
+                Command::execute(m_command, true);
+            } else {
+                Command::execute(m_command, false);
+            }
         }
     }
 }
