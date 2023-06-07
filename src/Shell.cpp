@@ -13,6 +13,24 @@ void Shell::displayPrompt() {
     cout << " >> ('exit' to quit): ";
 }
 
+
+void Shell::displayJobs() {
+    auto bgProcesses = MyJobs::getJobs();
+    cout << "PID\t\tCommand\t\t\tStatus" << endl;
+    for (auto it = bgProcesses.begin(); it != bgProcesses.end(); ++it) {
+        int status;
+        int processStatus = waitpid(it->getPid(), &status, WNOHANG);
+        if (processStatus == -1) {
+            std::cout << "Error checking process status for PID: " << it->getPid() << std::endl;
+        }
+        else if (processStatus == it->getPid()) {
+            MyJobs::eraseJob(int(it - bgProcesses.begin()));
+        } else {
+            std::cout << it->getPid() << "\t" << it->getCommand() << "\t\t" << "Running" << std::endl;
+        }
+    }
+}
+
 void Shell::run() {
     while (true) {
 
@@ -24,9 +42,12 @@ void Shell::run() {
             break;
         } else if (m_command.substr(0, 3) == "cd ") {
             m_directory = m_command.substr(3);
-            Directory::changeDirectory(m_previousDir, m_directory);
+            Directory::changeDirectory(m_directory);
+        } else if (m_command == "myjobs") {
+            displayJobs();
         } else {
-            Command::execute(m_command);
+            m_command.ends_with("&") ? Command::execute(m_command, true) :
+            Command::execute(m_command, false);
         }
     }
 }

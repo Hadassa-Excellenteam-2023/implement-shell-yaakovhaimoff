@@ -1,5 +1,7 @@
 #include "Directory.h"
 
+string Directory::m_previousDir;
+
 string Directory::getCurrentDirectory() {
     char currentDir[256];
     if (getcwd(currentDir, sizeof(currentDir)) != nullptr) {
@@ -14,20 +16,20 @@ string Directory::getCurrentDirectory() {
     }
 }
 
-void Directory::changeDirectory(string &previousDir, const string &directory) {
+void Directory::changeDirectory(const string &directory) {
     if (directory == "-") {
-        if (previousDir.empty()) {
+        if (m_previousDir.empty()) {
             cout << "Error: Previous directory not found.\n";
             return;
         }
-        if (chdir(previousDir.c_str()) != 0) { cout << "Error changing directory.\n"; }
+        if (chdir(m_previousDir.c_str()) != 0) { cout << "Error changing directory.\n"; }
     } else {
         char currentDir[256];
         if (getcwd(currentDir, sizeof(currentDir)) == nullptr) {
             cout << "Error getting current directory.\n";
             return;
         }
-        previousDir = currentDir;
+        m_previousDir = currentDir;
         if (chdir(directory.c_str()) != 0) { cout << "Error changing directory.\n"; }
     }
 }

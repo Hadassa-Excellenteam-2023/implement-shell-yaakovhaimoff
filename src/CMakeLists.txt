@@ -3,6 +3,7 @@
         "Directory.cpp"
         "Git.cpp"
         "main.cpp"
+        "MyJobs.cpp"
         "Shell.cpp"
         "User.cpp"
         )

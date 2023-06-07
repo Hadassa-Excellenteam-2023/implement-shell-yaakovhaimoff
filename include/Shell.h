@@ -11,10 +11,12 @@ class Shell {
     string m_branch;
     string m_command;
     string m_directory;
-    string m_previousDir;
+
+    void displayPrompt();
+
+    void displayJobs();
 
 public:
     void run();
 
-    void displayPrompt();
 };

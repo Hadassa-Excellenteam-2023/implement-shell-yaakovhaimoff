@@ -1,10 +1,7 @@
 #include "User.h"
 
-string User::getCurrentUser() {
-    char *userName = getenv("USER");
-    if (userName != nullptr) {
-        return {userName};
-    } else {
-        return "";
-    }
+std::string User::m_userName = getenv("USER");
+
+std::string User::getCurrentUser() {
+    return m_userName;
 }

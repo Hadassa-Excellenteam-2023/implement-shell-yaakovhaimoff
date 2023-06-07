@@ -1,17 +1,22 @@
 #include "Command.h"
 
-
 std::string Command::resolveCommandPath(const std::string &command) {
+    // Check if the command is already a full path
+    if (command.find('/') == 0 && access(command.c_str(), X_OK) == 0) {
+        return command;
+    }
+
     char *pathValue = getenv("PATH");
     if (pathValue == nullptr) {
         std::cerr << "Error: PATH environment variable not found.\n";
         return "";
     }
-    string pathString(pathValue);
+
+    std::string pathString(pathValue);
     std::stringstream pathStream(pathString);
-    string directory;
+    std::string directory;
     while (std::getline(pathStream, directory, ':')) {
-        string fullCommand = directory.append("/" + command);
+        std::string fullCommand = directory.append("/" + command);
         if (access(fullCommand.c_str(), X_OK) == 0) {
             return fullCommand;
         }
@@ -38,7 +43,7 @@ vector<char *> Command::setArguments(vector<string> &tokens) {
     return args;
 }
 
-void Command::execute(const string &command) {
+void Command::execute(const string &command, bool isBackground) {
     // Parse the command into command name and arguments
     vector<string> tokens = parseArguments(command);
 
@@ -47,7 +52,7 @@ void Command::execute(const string &command) {
         return;
     }
 
-    // does command exists
+    // Check if the command exists
     if (resolveCommandPath(tokens[0]).empty()) {
         cout << tokens[0] << ": command not found.\n";
         return;
@@ -63,15 +68,19 @@ void Command::execute(const string &command) {
     } else if (pid == 0) {
         // Child process
         if (execvp(tokens[0].c_str(), args.data()) == -1) {
-            cout << "Error executing command.\n";
+            cout << "Error executing command in child.\n";
             exit(EXIT_FAILURE);
         }
     } else {
         // Parent process
         int status;
+        if (isBackground) {
+            MyJobs::addJob(command, pid);
+            return;
+        }
         waitpid(pid, &status, 0);
         if (WIFEXITED(status) && WEXITSTATUS(status) != EXIT_SUCCESS) {
-            cout << "Error executing command.\n";
+            cout << "Error executing command in parent.\n";
         }
     }
 }
