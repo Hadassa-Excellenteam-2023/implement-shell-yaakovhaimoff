@@ -48,8 +48,10 @@ void Shell::run() {
             if (m_command.ends_with("&")) {
                 m_command = m_command.substr(0, m_command.size() - 1);
                 Command::execute(m_command, true);
+                ArgumentParser::resetFds();
             } else {
                 Command::execute(m_command, false);
+                ArgumentParser::resetFds();
             }
         }
     }

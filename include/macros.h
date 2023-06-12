@@ -8,6 +8,8 @@
 #include <sstream>
 #include <vector>
 #include <fcntl.h>
+#include <utility>
+#include <stdexcept>
 
 using std::vector;
 using std::pair;
